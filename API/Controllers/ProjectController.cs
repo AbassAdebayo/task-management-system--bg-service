@@ -2,6 +2,7 @@
 using Application.Commands.Projects.CreateProjectCommand;
 using Application.Commands.Projects.DeleteProjectCommand;
 using Application.Commands.Projects.UpdateProjectCommand;
+using Application.Commands.Tasks.AssignTaskToProjectCommand;
 using Application.Models;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -28,6 +29,16 @@ namespace API.Controllers
         public async Task<IActionResult> Create([FromBody] CreateProjectRequest request)
         {
             var response = await _mediatr.Send(new CreateProjectRequest(request.userId, request.name, request.description));
+            return response.Succeeded ? Ok(response) : BadRequest(response);
+        }
+
+        [HttpPost]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(BaseResponse))]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(ValidationResultModel))]
+        [ProducesResponseType((int)HttpStatusCode.Unauthorized, Type = typeof(BaseResponse))]
+        public async Task<IActionResult> AssignTaskToProject([FromBody] AssignTaskToProjectRequest request)
+        {
+            var response = await _mediatr.Send(new AssignTaskToProjectRequest(request.taskId, request.projectId));
             return response.Succeeded ? Ok(response) : BadRequest(response);
         }
 

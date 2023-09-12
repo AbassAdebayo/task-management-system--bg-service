@@ -18,5 +18,6 @@ namespace Domain.Contracts.Repositories
         Task<IList<Tasks>> GetAsync(Guid userId);
         Task<bool> ExitsAsync(Guid id);
         Task<bool> DeleteAsync(Tasks task);
+        Task<ProjectTasks> AssignTaskToProject(Guid taskId, Guid projectId);
     }
 }

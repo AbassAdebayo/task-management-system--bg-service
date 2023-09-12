@@ -26,6 +26,13 @@ namespace Infrastructure.Repositories
             return task;
         }
 
+        public async Task<ProjectTasks> AssignTaskToProject(Guid taskId, Guid projectId)
+        {
+            var projectTasks = new ProjectTasks { TaskId = taskId, ProjectId = projectId };
+            await _context.ProjectTasks.AddAsync(projectTasks);
+            return projectTasks;
+        }
+
         public async Task<bool> DeleteAsync(Tasks task)
         {
             _context.Tasks.Remove(task);
@@ -39,9 +46,18 @@ namespace Infrastructure.Repositories
             return false;
         }
 
-        public Task<IList<Tasks>> FetchDueTaskOfTheWeek(Guid userId)
+        public async Task<IList<Tasks>> FetchDueTaskOfTheWeek(Guid userId)
         {
-            throw new NotImplementedException();
+            var fetchTasks = await _context.Tasks.Where(t=> t.UserId == userId)
+            .OrderBy(t=> t.Tittle)
+            .AsNoTracking()
+            .ToListAsync();
+            DateTime currentDate = DateTime.UtcNow;
+            DateTime nextWeek = currentDate.AddDays(7);
+            return await _context.Tasks.Where(t => t.UserId == userId && t.DueDate >= currentDate && t.DueDate <= nextWeek)
+            .OrderBy(t=> t.Tittle)
+            .AsNoTracking()
+            .ToListAsync();
         }
 
         public async Task<IList<Tasks>> GetAsync(Guid userId, Status status = Status.Pending, Priority priority = Priority.Low)

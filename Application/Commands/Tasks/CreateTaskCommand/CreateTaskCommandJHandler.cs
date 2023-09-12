@@ -27,7 +27,7 @@ namespace Application.Commands.Tasks.CreateTaskCommand
         {
             //check if the user exist
             var user = await _userRepository.GetAsync(request.userId);
-            if (user.Id != request.userId)
+            if (user is null)
             {
                 return await Result<string>.FailAsync($"User details does not exist");
             }

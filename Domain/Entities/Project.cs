@@ -20,6 +20,6 @@ namespace Domain.Entities
         public User User { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public ICollection<Tasks> Tasks { get; set; } = new List<Tasks>();
+        public ICollection<ProjectTasks> ProjectTasks { get; set; } = new List<ProjectTasks>();
     }
 }
