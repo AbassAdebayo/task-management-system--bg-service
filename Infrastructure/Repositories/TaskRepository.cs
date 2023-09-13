@@ -48,10 +48,6 @@ namespace Infrastructure.Repositories
 
         public async Task<IList<Tasks>> FetchDueTaskOfTheWeek(Guid userId)
         {
-            var fetchTasks = await _context.Tasks.Where(t=> t.UserId == userId)
-            .OrderBy(t=> t.Tittle)
-            .AsNoTracking()
-            .ToListAsync();
             DateTime currentDate = DateTime.UtcNow;
             DateTime nextWeek = currentDate.AddDays(7);
             return await _context.Tasks.Where(t => t.UserId == userId && t.DueDate >= currentDate && t.DueDate <= nextWeek)
@@ -73,6 +69,17 @@ namespace Infrastructure.Repositories
         public async Task<Tasks> GetTaskAsync(Guid userId)
         {
             return _context.Tasks.FirstOrDefault(u => u.UserId == userId);
+        }
+
+        public async Task<IList<Tasks>> GetTasksDueWithin48HoursAsync()
+        {
+            DateTime currentTime = DateTime.UtcNow;
+            DateTime dueThreshold = currentTime.AddHours(48);
+
+            return await _context.Tasks.Where(task => task.Status == Status.Pending && task.DueDate <= dueThreshold)
+                .OrderBy(t => t.Tittle)
+                .AsNoTracking()
+                .ToListAsync();
         }
 
         public async Task<Tasks> UpdateAsync(Tasks task)

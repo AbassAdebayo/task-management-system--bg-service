@@ -27,7 +27,7 @@ namespace API.Controllers
         [ProducesResponseType((int)HttpStatusCode.Unauthorized, Type = typeof(BaseResponse))]
         public async Task<IActionResult> Create([FromBody] CreateUserCommand request)
         {
-            var response = await _mediatr.Send(new CreateUserCommand(request.name, request.email));
+            var response = await _mediatr.Send(request);
             return response.Succeeded ? Ok(response) : BadRequest(response);
         }
 

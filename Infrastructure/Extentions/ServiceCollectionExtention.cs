@@ -1,7 +1,10 @@
 ﻿using Domain.Contracts.Repositories;
 using Domain.Entities;
 using Infrastructure.Context;
+using Infrastructure.MailSenderService;
+using Infrastructure.MailServices.MailVerification;
 using Infrastructure.Repositories;
+using Infrastructure.TemplateEngine;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -26,11 +29,16 @@ namespace Infrastructure.Extentions
             return services
 
                 // Add Services
-
                 .AddScoped<IUserRepository, UserRepository>()
                 .AddScoped<ITaskRepository, TaskRepository>()
                 .AddScoped<IProjectRepository, ProjectRepository>()
                 .AddScoped<INotificationRepository, NotificationRepository>()
+
+                // Add mail sender and mail service
+                .AddScoped<IMailAddressVerificationService, MailAddressVerificationService>()
+                .AddScoped<IMailService, MailService>()
+                .AddScoped<IMailSenderService, MailSender>()
+                .AddScoped<IRazorEngine, RazorEngine>()
 
                 // Add transaction service || unit of work
                 .AddScoped<IUnitOfWork, UnitOfWork>();

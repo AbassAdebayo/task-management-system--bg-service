@@ -25,6 +25,7 @@ namespace Infrastructure.MailServices.MailVerification
 
         public async Task<BaseResponse<User>> VerifyMailAddress(string emailAddress)
         {
+            //Using Cloudmersive Api
             var response = await _emailApi.EmailFullValidationAsync(emailAddress);
             if (response.ValidAddress is false) return new BaseResponse<User> { Message = "Email validation unsuccessful", IsSuccess = false };
 

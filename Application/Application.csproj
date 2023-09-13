@@ -13,12 +13,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Domain\Domain.csproj" />
+    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Queries\Notifications\" />
     <Folder Include="Queries\Projects\" />
-    <Folder Include="Queries\Tasks\" />
   </ItemGroup>
 
 </Project>
