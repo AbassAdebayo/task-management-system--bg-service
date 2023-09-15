@@ -1,6 +1,7 @@
 ﻿using APi.Filters;
 using Application.Commands.Projects.CreateProjectCommand;
 using Application.Commands.Projects.DeleteProjectCommand;
+using Application.Commands.Projects.RemoveTaskFromProjectCommand;
 using Application.Commands.Projects.UpdateProjectCommand;
 using Application.Models;
 using MediatR;
@@ -49,6 +50,16 @@ namespace API.Controllers
         public async Task<IActionResult> Delete([FromBody] DeleteProjectRequest request)
         {
             var response = await _mediatr.Send(new DeleteProjectRequest(request.userId, request.projectId));
+            return response.Succeeded ? Ok(response) : BadRequest(response);
+        }
+
+        [HttpDelete]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(BaseResponse))]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(ValidationResultModel))]
+        [ProducesResponseType((int)HttpStatusCode.Unauthorized, Type = typeof(BaseResponse))]
+        public async Task<IActionResult> RemoveTaskFromProject([FromBody] RemoveTaskFromProjectRequest request)
+        {
+            var response = await _mediatr.Send(new RemoveTaskFromProjectRequest(request.projectId, request.taskId));
             return response.Succeeded ? Ok(response) : BadRequest(response);
         }
     }

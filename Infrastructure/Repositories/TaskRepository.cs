@@ -71,6 +71,15 @@ namespace Infrastructure.Repositories
             return _context.Tasks.FirstOrDefault(u => u.UserId == userId);
         }
 
+        public async Task<IList<Tasks>> GetTasksBasedOnTheirPriorityOrStatus(Priority priority, Status status)
+        {
+            return await _context.Tasks.Where(t => t.Priority == priority || t.Status == status)
+                .OrderBy(t => t.Tittle)
+                .AsNoTracking()
+                .ToListAsync();
+            
+        }
+
         public async Task<IList<Tasks>> GetTasksDueWithin48HoursAsync()
         {
             DateTime currentTime = DateTime.UtcNow;

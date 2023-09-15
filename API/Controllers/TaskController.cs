@@ -4,7 +4,8 @@ using Application.Commands.Tasks.CreateTaskCommand;
 using Application.Commands.Tasks.DeleteTaskCommand;
 using Application.Commands.Tasks.UpdateTaskCommand;
 using Application.Models;
-using Application.Queries.Tasks;
+using Application.Queries.Tasks.ListTasksBasedOnTheirPriorityOrStatusQuery;
+using Application.Queries.Tasks.ListTasksDueWithin48HoursQuery;
 using Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -48,7 +49,17 @@ namespace API.Controllers
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(BaseResponse))]
         [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(ValidationResultModel))]
         [ProducesResponseType((int)HttpStatusCode.Unauthorized, Type = typeof(BaseResponse))]
-        public async Task<IActionResult> ListTasksDueWithin48Hours([FromBody] ListTasksDueWithin48HoursQuery request)
+        public async Task<IActionResult> ListTasksDueWithin48Hours([FromBody] ListTasksDueWithin48HoursRequest request)
+        {
+            var response = await _mediatr.Send(request);
+            return response.Succeeded ? Ok(response) : BadRequest(response);
+        }
+
+        [HttpGet("ListTasksDueWithin48Hours")]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(BaseResponse))]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(ValidationResultModel))]
+        [ProducesResponseType((int)HttpStatusCode.Unauthorized, Type = typeof(BaseResponse))]
+        public async Task<IActionResult> ListTasksBasedOnTheirPriorityOrStatus([FromBody] ListTasksBasedOnTheirPriorityOrStatusRequest request)
         {
             var response = await _mediatr.Send(request);
             return response.Succeeded ? Ok(response) : BadRequest(response);

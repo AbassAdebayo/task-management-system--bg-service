@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Queries.Tasks
+namespace Application.Queries.Tasks.ListTasksDueWithin48HoursQuery
 {
-    public sealed record ListTasksDueWithin48HoursQuery() : IQuery<ListTasksDueWithin48HoursQueryResponse>
+    public sealed record ListTasksDueWithin48HoursRequest() : IQuery<ListTasksDueWithin48HoursQueryResponse>
     {
     }
 }

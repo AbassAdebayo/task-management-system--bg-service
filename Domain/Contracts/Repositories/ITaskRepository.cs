@@ -19,6 +19,7 @@ namespace Domain.Contracts.Repositories
         Task<bool> ExitsAsync(Guid id);
         Task<bool> DeleteAsync(Tasks task);
         Task<ProjectTasks> AssignTaskToProject(Guid taskId, Guid projectId);
-        Task<IList<Tasks>> GetTasksDueWithin48HoursAsync(); 
+        Task<IList<Tasks>> GetTasksDueWithin48HoursAsync();
+        Task<IList<Tasks>> GetTasksBasedOnTheirPriorityOrStatus(Priority priority, Status status);
     }
 }

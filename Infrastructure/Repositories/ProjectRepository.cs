@@ -48,6 +48,13 @@ namespace Infrastructure.Repositories
             return _context.Projects.FirstOrDefault(p => p.Id == id);
         }
 
+        public async Task<bool> RemoveTaskFromProject(Guid projectId, Guid taskId)
+        {
+            var projectTask = await _context.ProjectTasks.FirstOrDefaultAsync(p=> p.ProjectId == projectId && p.TaskId == taskId);
+             _context.ProjectTasks.Remove(projectTask);
+            return true;
+        }
+
         public async Task<Project> UpdateAsync(Project project)
         {
             _context.Projects.Update(project);

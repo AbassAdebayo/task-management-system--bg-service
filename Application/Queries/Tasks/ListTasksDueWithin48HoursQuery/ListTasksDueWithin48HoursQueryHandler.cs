@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Queries.Tasks
+namespace Application.Queries.Tasks.ListTasksDueWithin48HoursQuery
 {
-    public sealed record ListTasksDueWithin48HoursQueryHandler : IQueryHandler<ListTasksDueWithin48HoursQuery, ListTasksDueWithin48HoursQueryResponse>
+    public sealed record ListTasksDueWithin48HoursQueryHandler : IQueryHandler<ListTasksDueWithin48HoursRequest, ListTasksDueWithin48HoursQueryResponse>
     {
         private readonly ITaskRepository _taskRepository;
 
@@ -18,7 +18,7 @@ namespace Application.Queries.Tasks
             _taskRepository = taskRepository;
         }
 
-        public async Task<Result<ListTasksDueWithin48HoursQueryResponse>> Handle(ListTasksDueWithin48HoursQuery request, CancellationToken cancellationToken)
+        public async Task<Result<ListTasksDueWithin48HoursQueryResponse>> Handle(ListTasksDueWithin48HoursRequest request, CancellationToken cancellationToken)
         {
             var tasksDueWithin48Hours = await _taskRepository.GetTasksDueWithin48HoursAsync();
 
