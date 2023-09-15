@@ -2,6 +2,7 @@
 using Infrastructure.Messaging.Models;
 using Infrastructure.TemplateEngine;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,11 +18,11 @@ namespace Infrastructure.MailServices.MailVerification
         private readonly EmailConfiguration _emailConfiguration;
         private readonly ILogger<MailService> _logger;
 
-        public MailService(IMailSenderService mailSender, IRazorEngine razorEngine, EmailConfiguration emailConfiguration, ILogger<MailService> logger)
+        public MailService(IMailSenderService mailSender, IRazorEngine razorEngine, IOptions<EmailConfiguration> options, ILogger<MailService> logger)
         {
             _mailSender = mailSender;
             _razorEngine = razorEngine;
-            _emailConfiguration = emailConfiguration;
+            _emailConfiguration = options.Value;
             _logger = logger;
         }
 

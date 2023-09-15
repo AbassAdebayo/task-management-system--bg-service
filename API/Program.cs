@@ -1,9 +1,11 @@
 using Application.Commands.Users.CreateUserCommand;
 using Cqrs.Hosts;
 using Infrastructure.Extentions;
+using Infrastructure.MailServices.MailVerification;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,10 +19,15 @@ builder.Services.AddServices()
 
 // Add Database
 builder.Services.AddDatabase(builder.Configuration.GetConnectionString("ApplicationContext"));
+builder.Services.Configure<EmailConfiguration>(builder.Configuration.GetSection("EmailConfiguration"));
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddControllersWithViews()
+    .AddJsonOptions(options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
