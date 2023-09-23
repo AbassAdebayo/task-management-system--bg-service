@@ -1,4 +1,5 @@
-﻿using Domain.Contracts.Repositories;
+﻿using Domain.Contracts;
+using Domain.Contracts.Repositories;
 using Domain.Entities;
 using Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
@@ -43,9 +44,19 @@ namespace Infrastructure.Repositories
             return await _context.Projects.Where(p => p.UserId == userId).ToListAsync();
         }
 
+        public async Task<IList<ProjectTasks>> GetAllProjectTasks()
+        {
+            return await _context.ProjectTasks.Include(pt => pt.Tasks).ThenInclude(t => t.User)
+                .Include(pt => pt.Project)
+                .AsNoTracking()
+                .ToListAsync();
+                
+                
+        }
+
         public async Task<Project> GetAsync(Guid id)
         {
-            return _context.Projects.FirstOrDefault(p => p.Id == id);
+            return  _context.Projects.FirstOrDefault(p => p.Id == id);
         }
 
         public async Task<bool> RemoveTaskFromProject(Guid projectId, Guid taskId)

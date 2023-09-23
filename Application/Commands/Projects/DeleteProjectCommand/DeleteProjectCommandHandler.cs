@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Application.Commands.Projects.DeleteProjectCommand
 {
-    public class DeleteProjectCommandHandler : ICommandHandler<DeleteProjectRequest>
+    public sealed record DeleteProjectCommandHandler : ICommandHandler<DeleteProjectRequest>
     {
         private readonly IProjectRepository _projectRepository;
         private readonly IUnitOfWork _unitOfWork;

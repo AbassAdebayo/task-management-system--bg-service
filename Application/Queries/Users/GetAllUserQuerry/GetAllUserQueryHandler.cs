@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Application.Queries.Users.GetAllUserQuerry
 {
-    public class GetAllUserQueryHandler : IQueryHandler<GetAllUserRequest, IList<GetAllUserUserResponse>>
+    public sealed record GetAllUserQueryHandler : IQueryHandler<GetAllUserRequest, GetAllUserUserResponse>
     {
         private readonly IUserRepository _userRepository;
 
@@ -18,7 +18,7 @@ namespace Application.Queries.Users.GetAllUserQuerry
             _userRepository = userRepository;
         }
 
-        public async Task<Result<IList<GetAllUserUserResponse>>> Handle(GetAllUserRequest request, CancellationToken cancellationToken)
+        public async Task<Result<GetAllUserUserResponse>> Handle(GetAllUserRequest request, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }

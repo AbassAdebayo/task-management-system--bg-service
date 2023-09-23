@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Application.Commands.Projects.CreateProjectCommand
 {
-    public class CreateProjectCommandHandler : ICommandHandler<CreateProjectRequest>
+    public sealed record CreateProjectCommandHandler : ICommandHandler<CreateProjectRequest>
     {
         private readonly IProjectRepository _projectRepository;
         private readonly IUserRepository _userRepository;
@@ -27,14 +27,14 @@ namespace Application.Commands.Projects.CreateProjectCommand
         {
             //check if the user exist
             var user = await _userRepository.GetAsync(request.userId);
-            if (user.Id != request.userId)
+            if(user is null)
             {
-                return await Result<string>.FailAsync($"User details does not exist");
+                return await Result<string>.FailAsync($"user does not exist");
             }
 
             //create task
             var project = new Project(user.Id, request.name, request.description);
-            var result = await _projectRepository.AddAsync(project);
+            await _projectRepository.AddAsync(project);
 
             //Save to Database and return result
             await _unitOfWork.SaveChangesAsync();

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Application.Queries.Users.GetUserByEmailQuery
 {
-    public class GetUserByMailQueryHandler : IQueryHandler<GetUserByMailRequest, GetUserByMailResponse>
+    public sealed record GetUserByMailQueryHandler : IQueryHandler<GetUserByMailRequest, GetUserByMailResponse>
     {
         private readonly IUserRepository _userRepository;
 
@@ -29,7 +29,7 @@ namespace Application.Queries.Users.GetUserByEmailQuery
 
             //fetch user
             var user = await _userRepository.GetAsync(request.email);
-            var data = new GetUserByMailResponse(user.Name, user.Email);
+            var data = new GetUserByMailResponse(user.Name, user.Email, user.Id);
             //return result
             return await Result<GetUserByMailResponse>.SuccessAsync(data);
         }

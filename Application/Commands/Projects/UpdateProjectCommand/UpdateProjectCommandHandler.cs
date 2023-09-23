@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Application.Commands.Projects.UpdateProjectCommand
 {
-    public class UpdateProjectCommandHandler : ICommandHandler<UpdateProjectRequest>
+    public sealed record UpdateProjectCommandHandler : ICommandHandler<UpdateProjectRequest>
     {
         private readonly IProjectRepository _projectRepository;
         private readonly IUnitOfWork _unitOfWork;

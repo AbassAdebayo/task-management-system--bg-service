@@ -21,9 +21,9 @@ namespace Application.Queries.Tasks.ListTasksBasedOnTheirPriorityOrStatusQuery
 
         public async Task<Result<ListTasksBasedOnTheirPriorityOrStatusResponse>> Handle(ListTasksBasedOnTheirPriorityOrStatusRequest request, CancellationToken cancellationToken)
         {
-            var TasksBasedOnTheirPriorityOrStatusRequest = await _taskRepository.GetTasksBasedOnTheirPriorityOrStatus(request.Priority, request.Status);
+            var tasksBasedOnTheirPriorityOrStatus = await _taskRepository.GetTasksBasedOnTheirPriorityOrStatus(request.Priority, request.Status);
 
-            var data = new ListTasksBasedOnTheirPriorityOrStatusResponse(TasksBasedOnTheirPriorityOrStatusRequest);
+            var data = new ListTasksBasedOnTheirPriorityOrStatusResponse(tasksBasedOnTheirPriorityOrStatus);
 
             return await Result<ListTasksBasedOnTheirPriorityOrStatusResponse>.SuccessAsync(data);
         }

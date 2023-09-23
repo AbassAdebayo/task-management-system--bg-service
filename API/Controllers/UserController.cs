@@ -55,7 +55,7 @@ namespace API.Controllers
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(BaseResponse))]
         [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(ValidationResultModel))]
         [ProducesResponseType((int)HttpStatusCode.Unauthorized, Type = typeof(BaseResponse))]
-        public async Task<IActionResult> Get([FromBody] GetUserByMailRequest request)
+        public async Task<IActionResult> Get([FromQuery] GetUserByMailRequest request)
         {
             var response = await _mediatr.Send(new GetUserByMailRequest(request.email));
             return response.Succeeded ? Ok(response) : BadRequest(response);

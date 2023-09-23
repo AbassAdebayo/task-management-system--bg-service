@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Application.Commands.Tasks.DeleteTaskCommand
 {
-    public class DeleteTaskCommandHandler : ICommandHandler<DeleteTaskRequest>
+    public sealed record DeleteTaskCommandHandler : ICommandHandler<DeleteTaskRequest>
     {
         private readonly ITaskRepository _taskRepository;
         private readonly IUnitOfWork _unitOfWork;

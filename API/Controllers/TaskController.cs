@@ -6,6 +6,7 @@ using Application.Commands.Tasks.UpdateTaskCommand;
 using Application.Models;
 using Application.Queries.Tasks.ListTasksBasedOnTheirPriorityOrStatusQuery;
 using Application.Queries.Tasks.ListTasksDueWithin48HoursQuery;
+using Application.Queries.Tasks.ListUserDueTasksOfTheWeek;
 using Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -25,7 +26,7 @@ namespace API.Controllers
             _mediatr = mediatr;
         }
 
-        [HttpPost]
+        [HttpPost("create-task")]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(BaseResponse))]
         [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(ValidationResultModel))]
         [ProducesResponseType((int)HttpStatusCode.Unauthorized, Type = typeof(BaseResponse))]
@@ -35,7 +36,7 @@ namespace API.Controllers
             return response.Succeeded ? Ok(response) : BadRequest(response);
         }
 
-        [HttpPost("AssignTaskToProjectRequest")]
+        [HttpPost("assign-task-to-project")]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(BaseResponse))]
         [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(ValidationResultModel))]
         [ProducesResponseType((int)HttpStatusCode.Unauthorized, Type = typeof(BaseResponse))]
@@ -45,21 +46,31 @@ namespace API.Controllers
             return response.Succeeded ? Ok(response) : BadRequest(response);
         }
 
-        [HttpGet("ListTasksDueWithin48Hours")]
+        [HttpGet("list-tasks-due-within-48Hours")]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(BaseResponse))]
         [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(ValidationResultModel))]
         [ProducesResponseType((int)HttpStatusCode.Unauthorized, Type = typeof(BaseResponse))]
-        public async Task<IActionResult> ListTasksDueWithin48Hours([FromBody] ListTasksDueWithin48HoursRequest request)
+        public async Task<IActionResult> ListTasksDueWithin48Hours([FromQuery] ListTasksDueWithin48HoursRequest request)
         {
             var response = await _mediatr.Send(request);
             return response.Succeeded ? Ok(response) : BadRequest(response);
         }
 
-        [HttpGet("ListTasksDueWithin48Hours")]
+        [HttpGet("list-tasks-based-0n-their-priority-or-status")]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(BaseResponse))]
         [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(ValidationResultModel))]
         [ProducesResponseType((int)HttpStatusCode.Unauthorized, Type = typeof(BaseResponse))]
-        public async Task<IActionResult> ListTasksBasedOnTheirPriorityOrStatus([FromBody] ListTasksBasedOnTheirPriorityOrStatusRequest request)
+        public async Task<IActionResult> ListTasksBasedOnTheirPriorityOrStatus([FromQuery] ListTasksBasedOnTheirPriorityOrStatusRequest request)
+        {
+            var response = await _mediatr.Send(request);
+            return response.Succeeded ? Ok(response) : BadRequest(response);
+        }
+
+        [HttpGet("list-user-duetasks-of-the-week")]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(BaseResponse))]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(ValidationResultModel))]
+        [ProducesResponseType((int)HttpStatusCode.Unauthorized, Type = typeof(BaseResponse))]
+        public async Task<IActionResult> ListUserDueTasksOfTheWeek([FromQuery] ListUserDueTasksOfTheWeekRequest request)
         {
             var response = await _mediatr.Send(request);
             return response.Succeeded ? Ok(response) : BadRequest(response);
@@ -75,7 +86,7 @@ namespace API.Controllers
             return response.Succeeded ? Ok(response) : BadRequest(response);
         }
 
-        [HttpDelete]
+        [HttpDelete("delete-task")]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(BaseResponse))]
         [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(ValidationResultModel))]
         [ProducesResponseType((int)HttpStatusCode.Unauthorized, Type = typeof(BaseResponse))]

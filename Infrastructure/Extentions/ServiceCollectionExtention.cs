@@ -5,11 +5,14 @@ using Infrastructure.MailSenderService;
 using Infrastructure.MailServices.MailVerification;
 using Infrastructure.Repositories;
 using Infrastructure.TemplateEngine;
+using MassTransit;
+using MassTransit.Mediator;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -35,7 +38,7 @@ namespace Infrastructure.Extentions
                 .AddScoped<INotificationRepository, NotificationRepository>()
 
                 // Add mail sender and mail service
-                .AddScoped<IMailAddressVerificationService, MailAddressVerificationService>()
+                //.AddScoped<IMailAddressVerificationService, MailAddressVerificationService>()
                 .AddScoped<IMailService, MailService>()
                 .AddScoped<IMailSenderService, MailSender>()
                 .AddScoped<IRazorEngine, RazorEngine>()
@@ -43,5 +46,6 @@ namespace Infrastructure.Extentions
                 // Add transaction service || unit of work
                 .AddScoped<IUnitOfWork, UnitOfWork>();
         }
+       
     }
 }

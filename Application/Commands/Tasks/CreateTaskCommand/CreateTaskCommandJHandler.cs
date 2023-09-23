@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Application.Commands.Tasks.CreateTaskCommand
 {
-    public class CreateTaskCommandJHandler : ICommandHandler<CreateTaskRequest>
+    public sealed record CreateTaskCommandJHandler : ICommandHandler<CreateTaskRequest>
     {
         private readonly ITaskRepository _taskRepository;
         private readonly IUserRepository _userRepository;

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Application.Commands.Tasks.UpdateTaskCommand
 {
-    public class UpdateTaskCommandHandler : ICommandHandler<UpdateTaskRequest>
+    public sealed record UpdateTaskCommandHandler : ICommandHandler<UpdateTaskRequest>
     {
         private readonly ITaskRepository _taskRepository;
         private readonly IUnitOfWork _unitOfWork;

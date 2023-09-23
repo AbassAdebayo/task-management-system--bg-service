@@ -19,5 +19,7 @@ namespace Domain.Entities
         public string Name { get; set; }  
         public string Email { get; set; }
         public ICollection<Tasks> Tasks { get; set; } = new List<Tasks>();
+        public ICollection<Project> Projects { get; set; } = new List<Project>();
+
     }
 }

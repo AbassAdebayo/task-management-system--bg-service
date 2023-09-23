@@ -18,7 +18,6 @@
 
   <ItemGroup>
     <Folder Include="Queries\Notifications\" />
-    <Folder Include="Queries\Projects\" />
   </ItemGroup>
 
 </Project>

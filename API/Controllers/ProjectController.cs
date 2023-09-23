@@ -4,6 +4,7 @@ using Application.Commands.Projects.DeleteProjectCommand;
 using Application.Commands.Projects.RemoveTaskFromProjectCommand;
 using Application.Commands.Projects.UpdateProjectCommand;
 using Application.Models;
+using Application.Queries.Projects.ListProjectTasksQuery;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -22,7 +23,7 @@ namespace API.Controllers
             _mediatr = mediatr;
         }
 
-        [HttpPost]
+        [HttpPost("create-project")]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(BaseResponse))]
         [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(ValidationResultModel))]
         [ProducesResponseType((int)HttpStatusCode.Unauthorized, Type = typeof(BaseResponse))]
@@ -33,7 +34,7 @@ namespace API.Controllers
         }
 
 
-        [HttpPut]
+        [HttpPut("update-project")]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(BaseResponse))]
         [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(ValidationResultModel))]
         [ProducesResponseType((int)HttpStatusCode.Unauthorized, Type = typeof(BaseResponse))]
@@ -53,13 +54,23 @@ namespace API.Controllers
             return response.Succeeded ? Ok(response) : BadRequest(response);
         }
 
-        [HttpDelete]
+        [HttpDelete("remove-task-from-project")]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(BaseResponse))]
         [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(ValidationResultModel))]
         [ProducesResponseType((int)HttpStatusCode.Unauthorized, Type = typeof(BaseResponse))]
         public async Task<IActionResult> RemoveTaskFromProject([FromBody] RemoveTaskFromProjectRequest request)
         {
             var response = await _mediatr.Send(new RemoveTaskFromProjectRequest(request.projectId, request.taskId));
+            return response.Succeeded ? Ok(response) : BadRequest(response);
+        }
+
+        [HttpDelete("get-all-project-tasks")]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(BaseResponse))]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(ValidationResultModel))]
+        [ProducesResponseType((int)HttpStatusCode.Unauthorized, Type = typeof(BaseResponse))]
+        public async Task<IActionResult> GetAllProjectTasks([FromBody] ListProjectTasksRequest request)
+        {
+            var response = await _mediatr.Send(request);
             return response.Succeeded ? Ok(response) : BadRequest(response);
         }
     }

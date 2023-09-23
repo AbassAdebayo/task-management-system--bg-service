@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Application.Commands.Notifications.DeleteNotificationCommand
 {
-    public class DeleteNotificationCommandHandler : ICommandHandler<DeleteNotificationRequest>
+    public sealed record DeleteNotificationCommandHandler : ICommandHandler<DeleteNotificationRequest>
     {
         private readonly INotificationRepository _notificationRepository;
         private readonly IUnitOfWork _unitOfWork;

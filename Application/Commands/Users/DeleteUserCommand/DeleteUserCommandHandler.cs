@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Application.Commands.Users.DeleteUserCommand
 {
-    public class DeleteUserCommandHandler : ICommandHandler<DeleteUserRequest>
+    public sealed record DeleteUserCommandHandler : ICommandHandler<DeleteUserRequest>
     {
         private readonly IUserRepository _userRepository;
         private readonly IUnitOfWork _unitOfWork;

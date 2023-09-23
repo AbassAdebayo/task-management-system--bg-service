@@ -18,7 +18,7 @@ namespace Infrastructure.Context
         }
 
         public DbSet<User> Users { get; set; }
-        public DbSet<Domain.Entities.Tasks> Tasks { get; set; }
+        public DbSet<Tasks> Tasks { get; set; }
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<ProjectTasks> ProjectTasks { get; set; }

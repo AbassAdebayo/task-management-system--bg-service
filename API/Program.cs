@@ -1,7 +1,8 @@
 using Application.Commands.Users.CreateUserCommand;
-using Cqrs.Hosts;
+using Application.Extensions;
 using Infrastructure.Extentions;
 using Infrastructure.MailServices.MailVerification;
+using MassTransit;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
@@ -9,13 +10,17 @@ using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
 // Add services to the container.
 builder.Services.AddControllers();
 
 //Add Services and application
 builder.Services.AddServices()
+    .AddApplication()
     .AddLogging()
     .AddCors();
+    
+    
 
 // Add Database
 builder.Services.AddDatabase(builder.Configuration.GetConnectionString("ApplicationContext"));
@@ -46,9 +51,9 @@ app.UseHttpsRedirection();
 app.UseRouting();
 app.UseAuthorization();
 
-app.UseEndpoints(endpoints =>
+app.UseEndpoints(e =>
 {
-    endpoints.MapControllers();
+    e.MapControllers();
 });
 
 app.MapControllers();

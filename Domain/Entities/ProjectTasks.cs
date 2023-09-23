@@ -10,5 +10,7 @@ namespace Domain.Entities
     {
         public Guid TaskId { get; set; }
         public Guid ProjectId { get; set; }
+        public Tasks? Tasks { get; set; }
+        public Project? Project { get; set; }
     }
 }

@@ -2,7 +2,6 @@
 using Domain.Contracts.Repositories;
 using Domain.Entities;
 using Domain.Wrapper;
-using Infrastructure.MailServices.MailVerification;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,16 +10,15 @@ using System.Threading.Tasks;
 
 namespace Application.Commands.Users.CreateUserCommand
 {
-    public class CreateUserCommandHandler : ICommandHandler<CreateUserCommand>
+    public sealed record CreateUserCommandHandler : ICommandHandler<CreateUserCommand>
     {
         private readonly IUserRepository _userRepository;
-        private readonly IMailAddressVerificationService _mailAddressVerificationService;
         private readonly IUnitOfWork _unitOfWork;
 
-        public CreateUserCommandHandler(IUserRepository userRepository, IMailAddressVerificationService mailAddressVerificationService, IUnitOfWork unitOfWork)
+        public CreateUserCommandHandler(IUserRepository userRepository, IUnitOfWork unitOfWork)
         {
             _userRepository = userRepository;
-            _mailAddressVerificationService = mailAddressVerificationService;
+         
             _unitOfWork = unitOfWork;
         }
 
@@ -34,11 +32,11 @@ namespace Application.Commands.Users.CreateUserCommand
             }
 
             //Verify email
-            var verifyEmail = await _mailAddressVerificationService.VerifyMailAddress(request.email);
-            if (!verifyEmail.IsSuccess)
-            {
-                return await Result<string>.FailAsync($"Email verification failed: this could be that the email doesn't exist");
-            }
+            //var verifyEmail = await _mailAddressVerificationService.VerifyMailAddress(request.email);
+            //if (!verifyEmail.IsSuccess)
+            //{
+            //    return await Result<string>.FailAsync($"Email verification failed: this could be that the email doesn't exist");
+            //}
 
 
             //Create User 

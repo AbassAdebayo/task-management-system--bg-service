@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Application.Commands.Tasks.AssignTaskToProjectCommand
 {
-    public class AssignTaskToProjectCommandHandler : ICommandHandler<AssignTaskToProjectRequest>
+    public sealed record AssignTaskToProjectCommandHandler : ICommandHandler<AssignTaskToProjectRequest>
     {
         private readonly ITaskRepository _taskRepository;
         private readonly IProjectRepository _projectRepository;

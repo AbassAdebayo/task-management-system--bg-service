@@ -20,7 +20,7 @@ namespace API.Controllers
             _mediatr = mediatr;
         }
 
-        [HttpDelete]
+        [HttpDelete("delete-notification")]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(BaseResponse))]
         [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(ValidationResultModel))]
         [ProducesResponseType((int)HttpStatusCode.Unauthorized, Type = typeof(BaseResponse))]

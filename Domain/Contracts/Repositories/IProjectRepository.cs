@@ -16,5 +16,6 @@ namespace Domain.Contracts.Repositories
         Task<bool> ExistAsync(Guid id);
         Task<bool> DeleteAsync(Project project);
         Task<bool> RemoveTaskFromProject(Guid projectId, Guid taskId);
+        Task<IList<ProjectTasks>> GetAllProjectTasks();
     }
 }

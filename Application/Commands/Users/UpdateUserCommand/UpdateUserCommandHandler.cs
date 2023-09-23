@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Application.Commands.Users.UpdateUserCommand
 {
-    public class UpdateUserCommandHandler : ICommandHandler<UpdateUserRequest>
+    public sealed record UpdateUserCommandHandler : ICommandHandler<UpdateUserRequest>
     {
         private readonly IUserRepository _userRepository;
         private readonly IUnitOfWork _unitOfWork;

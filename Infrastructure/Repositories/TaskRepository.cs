@@ -46,7 +46,7 @@ namespace Infrastructure.Repositories
             return false;
         }
 
-        public async Task<IList<Tasks>> FetchDueTaskOfTheWeek(Guid userId)
+        public async Task<IList<Tasks>> FetchUserDueTasksOfTheWeek(Guid userId)
         {
             DateTime currentDate = DateTime.UtcNow;
             DateTime nextWeek = currentDate.AddDays(7);

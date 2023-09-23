@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="Cloudmersive.APIClient.NETCore.Validate" Version="2.2.6" />
+    <PackageReference Include="MassTransit" Version="8.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor" Version="2.2.0" />
 	 <PackageReference Include="sib_api_v3_sdk" Version="3.3.0" />
 	 <PackageReference Include="MailKit" Version="3.4.1" />
